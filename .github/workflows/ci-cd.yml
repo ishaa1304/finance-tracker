@@ -1,0 +1,56 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-frontend:
+    name: Build and Deploy Frontend
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: finance-tracker-frontend
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build Project
+        run: npm run dev
+
+      - name: Deploy Frontend
+        run: echo "Deploying Frontend..." # Replace with your deployment command
+
+  build-backend:
+    name: Build and Deploy Backend
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: finance-tracker-backend
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Start Backend
+        run: echo "Deploying Backend..." # Replace with your backend deployment command
