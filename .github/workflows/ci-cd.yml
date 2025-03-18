@@ -27,7 +27,7 @@ jobs:
         run: npm install
 
       - name: Build Project
-        run: npm run dev
+        run: npm run build
 
       - name: Deploy Frontend
         run: echo "Deploying Frontend..." # Replace with your deployment command
