@@ -6,17 +6,20 @@ on:
       - main
 
 jobs:
+  # ===========================
+  # Frontend Deployment
+  # ===========================
   build-frontend:
     name: Build and Deploy Frontend
     runs-on: ubuntu-latest
 
     defaults:
       run:
-        working-directory: finance-tracker-frontend
+        working-directory: ./finance-tracker-frontend
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
@@ -29,20 +32,25 @@ jobs:
       - name: Build Project
         run: npm run build
 
-      - name: Deploy Frontend
-        run: echo "Deploying Frontend..." # Replace with your deployment command
+      - name: Deploy Frontend to Vercel
+        run: |
+          npm install -g vercel
+          vercel --prod --token ${{ secrets.VERCEL_TOKEN }} --confirm --project ${{ secrets.VERCEL_PROJECT_ID }} --cwd ./finance-tracker-frontend
 
+  # ===========================
+  # Backend Deployment
+  # ===========================
   build-backend:
     name: Build and Deploy Backend
     runs-on: ubuntu-latest
 
     defaults:
       run:
-        working-directory: finance-tracker-backend
+        working-directory: ./finance-tracker-backend
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
@@ -52,5 +60,9 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - name: Start Backend
-        run: echo "Deploying Backend..." # Replace with your backend deployment command
+      - name: Delay before Render Deployment
+        run: sleep 5
+
+      - name: Deploy Backend to Render
+        run: |
+          curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK }}
