@@ -15,7 +15,8 @@ jobs:
 
     defaults:
       run:
-        working-directory: ./finance-tracker-frontend
+        working-directory: finance-tracker-frontend
+
 
     steps:
       - name: Checkout Code
@@ -34,8 +35,8 @@ jobs:
 
       - name: Deploy Frontend to Vercel
         run: |
-          npm install -g vercel
-          vercel --prod --token ${{ secrets.VERCEL_TOKEN }} --confirm --project ${{ secrets.VERCEL_PROJECT_ID }} --cwd ./finance-tracker-frontend
+          npm install -g vercel@latest
+          vercel --prod --token ${{ secrets.VERCEL_TOKEN }} --confirm --project ${{ secrets.VERCEL_PROJECT_ID }}
 
   # ===========================
   # Backend Deployment
