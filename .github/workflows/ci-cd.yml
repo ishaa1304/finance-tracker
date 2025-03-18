@@ -34,8 +34,9 @@ jobs:
 
       - name: Deploy Frontend to Vercel
         run: |
-          npm install -g vercel@latest
-          vercel --prod --token ${{ secrets.VERCEL_TOKEN }} --yes
+          npm install -g vercel
+          vercel --prod --token ${{ secrets.VERCEL_TOKEN }} --yes --cwd ./finance-tracker-frontend
+
 
 
   # ===========================
