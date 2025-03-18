@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-    # ===========================
+  # ===========================
   # Frontend Deployment
   # ===========================
   build-frontend:
@@ -15,7 +15,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: finance-tracker-frontend  # Remove leading `./`
+        working-directory: finance-tracker-frontend  # No `./` needed
 
     steps:
       - name: Checkout Code
@@ -35,8 +35,7 @@ jobs:
       - name: Deploy Frontend to Vercel
         run: |
           npm install -g vercel
-          vercel --prod --token ${{ secrets.VERCEL_TOKEN }} --yes --cwd ./finance-tracker-frontend
-
+          vercel --prod --token ${{ secrets.VERCEL_TOKEN }} --yes  # No --cwd needed now
 
 
   # ===========================
@@ -48,7 +47,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: ./finance-tracker-backend
+        working-directory: finance-tracker-backend  # Remove `./` for consistency
 
     steps:
       - name: Checkout Code
